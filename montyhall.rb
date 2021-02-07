@@ -72,7 +72,7 @@ class Challenger < Cast
   
   # ヒントを見た後でドアを選択
   def choose_door_again(doors, strategy)
-    if strategy == :switch
+    if strategy == "switch"
       switch(doors)
     else # strategy == :stay
       stay
@@ -95,7 +95,7 @@ end
 
 
 # ゲームをやってみる
-def play_game
+def play_game(strategy)
 
   # 司会者と挑戦者
   host = Host.new("司会者")
@@ -109,7 +109,7 @@ def play_game
   new_doors = host.open_hint(initial_choice)
   
   # ヒントを見た挑戦者がドアを変えるか選ぶ
-  second_choice = challenger.choose_door_again(new_doors, :switch)
+  second_choice = challenger.choose_door_again(new_doors, strategy)
   
   # 選んだドアを開ける
   is_correct = host.unvail(second_choice)
@@ -120,10 +120,16 @@ end
 
 # ゲームを何度もやってみる
 
+# コマンドラインから試行回数
+max_trials = ARGV[0].to_i
+
+# 2回目のドア選択方針(switch|stay)
+strategy = ARGV[1]
+
 correct_count = 0
-1000.times do |n|
+max_trials.times do |n|
   puts "#{n+1}回目"
-  correct_count += play_game ? 1 : 0
+  correct_count += play_game(strategy) ? 1 : 0
   puts "累計正解#{correct_count}回"
 end
 
