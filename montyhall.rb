@@ -61,7 +61,7 @@ end
 
 
 # 挑戦者
-class Challenger < Cast  
+class Contestant < Cast  
   
   # 最初にドアを選択
   def choose_door(doors)
@@ -99,17 +99,17 @@ def play_game(strategy)
 
   # 司会者と挑戦者
   host = Host.new("司会者")
-  challenger = Challenger.new("挑戦者")
+  contestant = Contestant.new("挑戦者")
   
   # 挑戦者がドアを選ぶ
   doors = host.show_doors
-  initial_choice = challenger.choose_door(doors)
+  initial_choice = contestant.choose_door(doors)
   
   # 司会者がヒントとして不正解のドアを開ける
   new_doors = host.open_hint(initial_choice)
   
   # ヒントを見た挑戦者がドアを変えるか選ぶ
-  second_choice = challenger.choose_door_again(new_doors, strategy)
+  second_choice = contestant.choose_door_again(new_doors, strategy)
   
   # 選んだドアを開ける
   is_correct = host.unvail(second_choice)
