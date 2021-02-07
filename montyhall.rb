@@ -61,7 +61,7 @@ end
 
 
 # 挑戦者
-class Challenger < Cast
+class Challenger < Cast  
   
   # 最初にドアを選択
   def choose_door(doors)
@@ -72,9 +72,9 @@ class Challenger < Cast
   
   # ヒントを見た後でドアを選択
   def choose_door_again(doors, strategy)
-    if strategy[:switch]
+    if strategy == :switch
       switch(doors)
-    else
+    else # strategy == :stay
       stay
     end
     say @choice
@@ -109,7 +109,7 @@ def play_game
   new_doors = host.open_hint(initial_choice)
   
   # ヒントを見た挑戦者がドアを変えるか選ぶ
-  second_choice = challenger.choose_door_again(new_doors, switch: true)
+  second_choice = challenger.choose_door_again(new_doors, :switch)
   
   # 選んだドアを開ける
   is_correct = host.unvail(second_choice)
